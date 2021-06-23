@@ -11,3 +11,10 @@
 
         - name: hello codelies!
           run: echo "hello!!!! from ${{ github.workflow }} triggered by the ${{ github.event_name }} done by ${{ github.actor }}"
+          
+        - name: More and more
+          env:
+              JOB_CONTEXT : ${{ toJoson(job }}
+          run: |
+            echo "job context: $JOB_CONTEXT"
+            echo "Done!"
