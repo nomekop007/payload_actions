@@ -1,43 +1,30 @@
-name: First workflow
+name: CI
 
 on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        php-versions: ['7.2', '7.3', '7.4']
 
-    name: ${{ matrix.os }} PHP ${{ matrix.php-versions }}
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
-      - name: Hello Codelies!
-        run: echo "Hello!!!! from ${{ github.workflow }} triggered by the ${{ github.event_name }} done by ${{ github.actor }}"
-
-      - name: 😊 More and more
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: |
-          echo "Job Context: $JOB_CONTEXT"
-          echo "Done!"
-
-      - name: Greeting if Windows
-        if: matrix.os == 'windows-latest'
-        run: echo "Hey from Win2!"
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v1
-        with:
-          php-version: ${{ matrix.php-versions }}
-          coverage: none
-
       - name: Install dependencies
-        working-directory: ./lessons/03-continuous_Integration/03.3-Build_Matrix
-        run: composer install --ignore-platform-reqs
+        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
+        run: make composer-install
+
+      - name: Start all the environment
+        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
+        run: make start
+
+      - name: Wait for the environment to get up
+        run: |
+          while ! make ping-mysql; do
+              echo "Waiting for database connection..."
+              sleep 2
+          done
 
       - name: Run the tests
-        working-directory: ./lessons/03-continuous_Integration/03.3-Build_Matrix
-        run: composer phpunit
+        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
+        run: make test
