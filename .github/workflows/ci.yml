@@ -20,6 +20,7 @@ jobs:
           echo "Done!"
 
       - name: Install infra dependencies
+        working-directory: ./lessons/04-Testing_Infrastructure/04.1-Installing_dependencies_by_hand
         run: sh etc/install.sh
 
       - name: Install application dependencies
