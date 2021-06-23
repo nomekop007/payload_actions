@@ -11,11 +11,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install dependencies
-        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
+        working-directory: ./lessons/04-Testing_Infrastructure/04.1-Installing_dependencies_by_hand
         run: make composer-install
 
       - name: Start all the environment
-        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
+        working-directory: ./lessons/04-Testing_Infrastructure/04.1-Installing_dependencies_by_hand
         run: make start
 
       - name: Wait for the environment to get up
@@ -26,5 +26,5 @@ jobs:
           done
 
       - name: Run the tests
-        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
+        working-directory: ./lessons/04-Testing_Infrastructure/04.1-Installing_dependencies_by_hand
         run: make test

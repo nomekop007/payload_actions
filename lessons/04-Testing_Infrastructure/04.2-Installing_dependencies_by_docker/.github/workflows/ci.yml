@@ -23,9 +23,9 @@ jobs:
         run: sh etc/install.sh
 
       - name: Install application dependencies
-        working-directory: ./lessons/04-Testing_Infrastructure/04.1-Installing_dependencies_by_hand
+        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
         run: composer install --ignore-platform-reqs
 
       - name: Run the tests
-        working-directory: ./lessons/04-Testing_Infrastructure/04.1-Installing_dependencies_by_hand
+        working-directory: ./lessons/04-Testing_Infrastructure/04.2-Installing_dependencies_by_docker
         run: composer phpunit
